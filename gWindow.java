@@ -37,18 +37,49 @@ class gWindow implements ActionListener{
     private JPanel gamePanel;
     private JLabel jLabel3;
     private JButton quitButton;
-    private String character;
+    public String character;
     private JPanel buttonPanel;
     private JButton beginButton;
+    private JButton turret1;
+    private JButton turret2;
+    private JPanel levelPanel;
+    private JButton characterButton;
+    private JButton characterButton2;
     
     public gWindow() throws IOException
     {
         //create and initialize frame 
         frame = new JFrame();
         frame.setTitle("Clash of Candidates");
-      
-        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
+        
+       /* 
+        
+        
+        //BeginSession();
+        int[][] map= {
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0}    
+   
+        };
+        TileGrid grid = new TileGrid(map);
+        Tile tile = new Tile(0, 0, 64, 64, TileType.Grass);
+        Tile tile2 = new Tile(0, 0, 64, 64, TileType.Dirt);
+        
+        
+        while(!Display.isCloseRequested()){
+            
+            grid.Draw();
+            Display.update();
+            Display.sync(60);
+            
+        }
+        Display.destroy();
+       
+        
+        */
+        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //Map map = new Map();
         frame.setSize(1300,700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -67,7 +98,12 @@ class gWindow implements ActionListener{
         HillaryButton = new JButton();
         buttonPanel = new JPanel();
         beginButton = new JButton();
-        
+        turret1 = new JButton();
+        turret2 = new JButton();
+        levelPanel = new JPanel();
+        characterButton = new JButton();
+        characterButton2 = new JButton();
+        character = "";
         
         // create and initialize image backgrounds
         ImageIcon bg = new ImageIcon(getClass().getResource("flag.gif"));
@@ -86,8 +122,23 @@ class gWindow implements ActionListener{
         background2 = new JLabel(bg2);
         //background2.setPreferredSize(new Dimension(200,400));
         
-        ImageIcon map = new ImageIcon(getClass().getResource("usMap.jpeg"));
-        background3 = new JLabel(map);
+        ImageIcon level = new ImageIcon(getClass().getResource("usMap.jpeg"));
+        background3 = new JLabel(level);
+        
+        ImageIcon tb = new ImageIcon(getClass().getResource("turret2Small.jpg"));
+        turret1 = new JButton(tb);
+        
+        ImageIcon tb2 = new ImageIcon(getClass().getResource("turret1-small.jpg"));
+        turret2 = new JButton(tb2);
+        
+        ImageIcon cb = new ImageIcon(getClass().getResource("Hillary.png"));
+        characterButton = new JButton(cb);
+        characterButton.setPreferredSize(new Dimension(30,30));
+        
+        ImageIcon cb2 = new ImageIcon(getClass().getResource("Trump.png"));
+        characterButton2 = new JButton(cb2);
+        characterButton2.setPreferredSize(new Dimension(30,30));
+       
         
          // add components to the panels and set panel format
         frame.setLayout(new BorderLayout()); 
@@ -103,7 +154,7 @@ class gWindow implements ActionListener{
         jLabel2.setFont(new Font("Copperplate Gothic Bold", 40,90));
         jLabel2.setForeground(Color.BLUE);
         jLabel3.setFont(new Font("Chiller", 40, 90));
-        jLabel3.setForeground(Color.LIGHT_GRAY);
+        jLabel3.setForeground(Color.RED);
            
         panel2.add(jLabel2, BorderLayout.NORTH);
         panel2.add(TrumpButton, BorderLayout.EAST);
@@ -114,11 +165,22 @@ class gWindow implements ActionListener{
         
         
         gamePanel.setLayout(new BorderLayout());
-        gamePanel.add(background3, BorderLayout.CENTER);
-        //gamePanel.add(jLabel3,BorderLayout.NORTH);
         
+        //gamePanel.add(background3, BorderLayout.CENTER);
+        Map map = new Map();
+        gamePanel.add(map, BorderLayout.CENTER);
+        
+        levelPanel.setLayout(new BorderLayout());
+        //levelPanel.add(background3, BorderLayout.CENTER);
+        //levelPanel.add(characterButton, BorderLayout.CENTER);
+       // levelPanel.add(jLabel3, BorderLayout.NORTH);
+        //gamePanel.add(jLabel3,BorderLayout.NORTH);
+        //gamePanel.add(background3, BorderLayout.CENTER);
+       
         buttonPanel.setBackground(Color.LIGHT_GRAY);
         buttonPanel.add(beginButton);
+        buttonPanel.add(turret1);
+        buttonPanel.add(turret2);
         
      
         // set the text for the title screen labels 
@@ -146,7 +208,7 @@ class gWindow implements ActionListener{
 
         jLabel1.setText("     Clash of Candidates");
         jLabel2.setText("Choose your Character");
-        jLabel3.setText("I'm gonna make America great again");
+        jLabel3.setText("   DANGER INCOMING");
         
         // create action listener for the start button that changes the panel  
         startButton.addActionListener(new ActionListener(){
@@ -171,14 +233,20 @@ class gWindow implements ActionListener{
            character = "Hillary" ; 
            frame.getContentPane().removeAll();
            //battleSong();
-           frame.add(gamePanel, BorderLayout.CENTER);
-           frame.add(buttonPanel, BorderLayout.NORTH);
-           buttonPanel.add(quitButton);
-           quitButton.setContentAreaFilled(true);
-           quitButton.setBorderPainted(true);
-           quitButton.setFocusPainted(true);
-           quitButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-           quitButton.setForeground(Color.black);
+           
+           //frame.add(gamePanel, BorderLayout.CENTER);
+           //frame.add(buttonPanel, BorderLayout.NORTH);
+           
+           frame.add(jLabel3, BorderLayout.NORTH);
+           levelPanel.add(characterButton2, BorderLayout.CENTER);
+           frame.add(levelPanel, BorderLayout.CENTER);
+           frame.add(background3, BorderLayout.WEST);
+           //buttonPanel.add(quitButton);
+           characterButton2.setContentAreaFilled(false);
+           characterButton2.setBorderPainted(false);
+           characterButton2.setFocusPainted(false);
+           //quitButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+           //quitButton.setForeground(Color.black);
            frame.revalidate();
            frame.repaint();
         }
@@ -191,7 +259,34 @@ class gWindow implements ActionListener{
            character = "Trump";
            frame.getContentPane().removeAll();
            //battleSong();
-          
+          frame.add(jLabel3, BorderLayout.NORTH);
+          levelPanel.add(characterButton, BorderLayout.CENTER);
+          frame.add( levelPanel , BorderLayout.CENTER);
+          frame.add(background3, BorderLayout.WEST);
+           //frame.add(gamePanel, BorderLayout.CENTER);
+           //frame.add(buttonPanel, BorderLayout.NORTH);
+           //buttonPanel.add(quitButton);
+           characterButton.setContentAreaFilled(false);
+           characterButton.setBorderPainted(false);
+           characterButton.setFocusPainted(false);
+           //quitButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+           //quitButton.setForeground(Color.black);
+           frame.revalidate();
+           frame.repaint();
+               
+            }
+        
+        
+     });
+        
+         characterButton.addActionListener(new ActionListener(){
+        
+            @Override
+        public void actionPerformed(ActionEvent e)
+        {
+           
+           frame.getContentPane().removeAll();
+           //battleSong();
            frame.add(gamePanel, BorderLayout.CENTER);
            frame.add(buttonPanel, BorderLayout.NORTH);
            buttonPanel.add(quitButton);
@@ -202,9 +297,37 @@ class gWindow implements ActionListener{
            quitButton.setForeground(Color.black);
            frame.revalidate();
            frame.repaint();
-        }
+               
+           }
+            
+        
+        
      });
         
+        characterButton2.addActionListener(new ActionListener(){
+        
+            @Override
+        public void actionPerformed(ActionEvent e)
+        {
+           
+           frame.getContentPane().removeAll();
+           //battleSong();
+           frame.add(gamePanel, BorderLayout.CENTER);
+           frame.add(buttonPanel, BorderLayout.NORTH);
+           buttonPanel.add(quitButton);
+           quitButton.setContentAreaFilled(true);
+           quitButton.setBorderPainted(true);
+           quitButton.setFocusPainted(true);
+           quitButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+           quitButton.setForeground(Color.black);
+           frame.revalidate();
+           frame.repaint();
+               
+           }
+            
+        
+        
+     });
         quitButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 System.exit(0);

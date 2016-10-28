@@ -17,11 +17,19 @@ public class ClashofCandidates {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
+    
+   // public ClashofCandidates(){
+        //BeginSession();
+   //     Tile tile = new Tile(0, 0, 64, 64, TileType.Grass);
+   //     Tile tile2 = new Tile(0, 0, 64, 64, TileType.Dirt);
+        
+   // }
     public static void main(String[] args) throws IOException{
         // TODO code application logic here
 
         gWindow window;
         window = new gWindow();
+        
     }
     
 }
